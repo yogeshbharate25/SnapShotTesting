@@ -114,16 +114,16 @@ func test_contentView_accessibilityLabel_snapshot() async throws {
     assertSnapshot(matching: vc, as: .accessibilityDescription, named: "ContentView_accessibilityLabel")
 }
 ```
-##5. ✅ Advantages vs 🚫 Disadvantages
-✅ ### Advantages:
-Quickly detects UI regressions visually.
-Great for design consistency across font sizes/devices.
-Simplifies testing layout without verbose assertions.
-Easy integration with SwiftUI previews and components.
+## 5. ✅ Advantages vs 🚫 Disadvantages
+✅ Advantages:
+- Quickly detects UI regressions visually.
+- Great for design consistency across font sizes/devices.
+- Simplifies testing layout without verbose assertions.
+- Easy integration with SwiftUI previews and components.
 
-🚫 ### Disadvantages:
-Fragile: Fails on minor pixel variations.
-Harder to debug: No descriptive output—requires visual diff review.
-Needs frequent updates when intentional changes happen.
-Can create a lot of snapshot artifacts in the repo.
+🚫 Disadvantages:
+- Fragile: Fails on minor pixel variations.
+- Harder to debug: No descriptive output—requires visual diff review.
+- Needs frequent updates when intentional changes happen.
+- Can create a lot of snapshot artifacts in the repo.
 
