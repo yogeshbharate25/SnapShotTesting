@@ -53,3 +53,77 @@ struct CustomTextField: View {
         .padding()
     }
 }
+```
+### `ContentView` View
+```swift
+struct ContentView: View {
+    private var errorMessage: String? {
+        isShowError ? "This is Demo error" : nil
+    }
+
+    @State private var inputText: String
+    private let isShowError: Bool
+    private let header: String
+
+    init(header: String = "Header 1",
+         inputText: String = "Sample demo",
+         isShowError: Bool = false) {
+        self.header = header
+        self.inputText = inputText
+        self.isShowError = isShowError
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            CustomTextField(
+                header: header,
+                error: errorMessage,
+                text: $inputText
+            )
+            Spacer()
+        }
+    }
+}
+```
+## 4. 🧪 Test Cases (XCTest + SnapshotTesting)
+```swift
+@MainActor
+func test_customTextField_withoutError_snapshot() async throws {
+    let view = ContentView()
+    let vc = UIHostingController(rootView: view)
+    assertSnapshot(matching: vc, as: .image(on: .iPhoneX), named: "CustomTextFieldView")
+}
+
+@MainActor
+func test_customTextField_withError_snapshot() async throws {
+    let view = ContentView(isShowError: true)
+    let vc = UIHostingController(rootView: view)
+    assertSnapshot(matching: vc, as: .image(on: .iPhoneX), named: "CustomTextFieldView_withError")
+}
+
+@MainActor
+func test_customTextField_accessibilityLarge_snapshot() async throws {
+    let traits = UITraitCollection(preferredContentSizeCategory: .accessibilityLarge)
+    let vc = UIHostingController(rootView: ContentView())
+    assertSnapshot(matching: vc, as: .image(on: .iPhoneX, traits: traits), named: "Accessibility_Large")
+}
+
+@MainActor
+func test_contentView_accessibilityLabel_snapshot() async throws {
+    let vc = UIHostingController(rootView: ContentView())
+    assertSnapshot(matching: vc, as: .accessibilityDescription, named: "ContentView_accessibilityLabel")
+}
+```
+##5. ✅ Advantages vs 🚫 Disadvantages
+✅ ### Advantages:
+Quickly detects UI regressions visually.
+Great for design consistency across font sizes/devices.
+Simplifies testing layout without verbose assertions.
+Easy integration with SwiftUI previews and components.
+
+🚫 ### Disadvantages:
+Fragile: Fails on minor pixel variations.
+Harder to debug: No descriptive output—requires visual diff review.
+Needs frequent updates when intentional changes happen.
+Can create a lot of snapshot artifacts in the repo.
+
