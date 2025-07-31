@@ -127,7 +127,7 @@ func test_contentView_accessibilityLabel_snapshot() async throws {
 - Needs frequent updates when intentional changes happen.
 - Can create a lot of snapshot artifacts in the repo.
 
-  ## 6. Best Practices
+## 6. Best Practices
 - Use .accessibilityDescription for accessibility snapshots.
 - Name snapshots meaningfully with named: to avoid confusion.
 - Always turn off isRecording = true before committing.
